@@ -1,0 +1,4 @@
+development:
+  password: app_pass
+  theme_id: "theme id"
+  store: store

@@ -1,0 +1,38 @@
+<div class="min-h-screen py-20 w-full sm:w-3/4 lg:w-4/5 mx-auto px-5">
+    <h1 class="text-3xl font-bold pb-5">Search</h1>
+    {% paginate search.results by 10 %}
+    <form id="search-page-form" action="/search" method="get" role="search" class="flex flex-row space-x-10 items-center">
+        <div class="w-full">
+            <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search...">
+        </div>
+        <div>
+            <button type="submit" class="bg-black text-white hover:bg-gray-800 px-5 py-2 rounded">Search</button>
+        </div>
+    </form>
+    {% if search.performed %}
+    {% for item in search.results %}
+    <div class="flex flex-row border-b border-solid border-gray-200 hover:bg-gray-50 py-10 items-center">
+        {% if item.featured_image %}
+        <div class="p-5">
+            <a href="{{ item.url | within: collection }}" title="{{ item.title | escape }}">
+                {{ item.featured_image.src | img_url: 'medium' | img_tag: item.featured_image.alt }}
+            </a>
+        </div>
+        {% endif %}
+        <div>
+            <h5 class="font-bold text-xl hover:underline">{{ item.title | link_to: item.url }}</h5>
+            <p class="py-5">{{ item.content | strip_html | truncatewords: 50 }}</p>
+        </div>
+    </div>
+    {% else %}
+    no results
+    {% endfor %}
+    {% endif %}
+    <div class="py-10 text-center text-lg">
+        {% if paginate.pages > 1 %}
+        {{ paginate | default_pagination }}
+        {% endif %}
+    </div>
+</div>
+{% endpaginate %}
+</div>

@@ -1,0 +1,265 @@
+<div class="max-w-7xl px-5 mx-auto pt-10 md:pt-0">
+    <div class="pb-2">
+        {% render 'breadcrumbs' %}
+    </div>
+    <div id="mobile-title" class="block md:hidden">
+        <div class="grid grid-cols-3">
+            <div class="col-span-2">
+                <h1 class="font-bold text-xl sm:text-2xl">{{ product.title }}</h1>
+            </div>
+            <div>
+                <div id="" class="price-field font-bold text-xl sm:text-2xl"></div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12 md:col-span-6 border-gray-200 border-b md:border-none py-5 md:py-0">
+            <div class="md:px-10 flex flex-col top-0 sticky">
+                <div id="primary-slider" class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for image in product.images %}
+                            <li class="splide__slide">
+                                <img data-id="{{image.id}}" data-src="{{img.src}}" data-variant-id="{{ image.variants }}" class="thumbnail-image" src="{{ image.src | img_url: '' }}" alt="{{ image.alt | escape }}">
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div id="secondary-slider" class="splide pt-3">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for image in product.images %}
+                            <li data-id="{{image.id}}" class="splide__slide">
+                                <img class="thumbnail-image" src="{{ image.src | img_url: '' }}" alt="{{ image.alt | escape }}">
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-12 md:col-span-5 flex flex-col">
+            <div class="hidden md:block pb-2">
+                <h1 class="text-3xl font-extrabold">{{ product.title }}</h1>
+            </div>
+            <div>
+                <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="space-y-2 ">
+                    <div class="hidden md:block">
+                        <div id="" class="price-field pb-5 text-xl"></div>
+                    </div>
+                    <div class="{% if product.variants.size == 1 and product.variants.first.title contains 'Default' %} hidden {% endif %}">
+                        {% for option in product.options %}
+                        {{ option | capitalize }}
+                        {% endfor %}
+                    </div>
+                    <div class="{% if product.variants.size == 1 and product.variants.first.title contains 'Default' %} hidden {% endif %}">
+                        <select name="id" id="product-select" class="border border-solid border-gray-300 rounded">
+                            {% for variant in product.variants %}
+                            {% if variant.available %}
+                            <option value="{{ variant.id }}">
+                                {{ variant.title }}
+                            </option>
+                            {% else %}
+                            <option disabled="disabled">
+                                {{ variant.title }} - Sold out
+                            </option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="pt-5">
+                        <label for="Quantity">Quantity</label>
+                    </div>
+                    <div class="grid grid-cols-12 items-center">
+                        <div class="col-span-2 flex flex-col pr-3">
+                            <input class="w-full border border-solid border-gray-300 rounded h-12" type="number" id="Quantity" name="quantity" value="1" min="1">
+                        </div>
+                        <div class="col-span-10">
+                            <div>
+                                <button class="bg-indigo-600 hover:bg-indigo-700 py-3 text-white shadow-1 w-full flex flex-row items-center justify-center rounded" type="submit" name="add" id="AddToCart">Add to cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-center text-gray-400 py-2 flex flex-row items-center justify-center space-x-2">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                            </svg>
+                        </div>
+                        <a href="#">
+                            <div class="hover:underline">View Return Policy</div>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div class="pt-10 prose">
+                {{ product.description }}
+            </div>
+            <div class="border-t divide-y divide-gray-200">
+                <div x-data="{ open: true }">
+                    <h3>
+                        <button type="button" x-description="Expand/collapse question button" class="group relative w-full py-6 flex justify-between items-center text-left" aria-controls="disclosure-1" @click="open = !open" aria-expanded="true" x-bind:aria-expanded="open.toString()">
+                            <span class="text-sm font-medium text-indigo-600" x-state:on="Open" x-state:off="Closed" :class="{ 'text-indigo-600': open, 'text-gray-900': !(open) }">
+                                Features
+                            </span>
+                            <span class="ml-6 flex items-center">
+                                <svg class="h-6 w-6 text-gray-400 group-hover:text-gray-500 hidden" x-state:on="Open" x-state:off="Closed" :class="{ 'hidden': open, 'block': !(open) }" x-description="Heroicon name: outline/plus-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <svg class="h-6 w-6 text-indigo-400 group-hover:text-indigo-500 block" x-state:on="Open" x-state:off="Closed" :class="{ 'block': open, 'hidden': !(open) }" x-description="Heroicon name: outline/minus-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </h3>
+                    <div class="pb-6 prose prose-sm" id="disclosure-1" x-show="open">
+                        <ul role="list">
+                            <li>Multiple strap configurations</li>
+                            <li>Spacious interior with top zip</li>
+                            <li>Leather handle and tabs</li>
+                            <li>Interior dividers</li>
+                            <li>Stainless strap loops</li>
+                            <li>Double stitched construction</li>
+                            <li>Water-resistant</li>
+                        </ul>
+                    </div>
+                </div>
+                <div x-data="{ open: false }">
+                    <h3>
+                        <button type="button" x-description="Expand/collapse question button" class="group relative w-full py-6 flex justify-between items-center text-left" aria-controls="disclosure-1" @click="open = !open" aria-expanded="false" x-bind:aria-expanded="open.toString()">
+                            <span class="text-sm font-medium text-gray-900" x-state:on="Open" x-state:off="Closed" :class="{ 'text-indigo-600': open, 'text-gray-900': !(open) }">
+                                Care
+                            </span>
+                            <span class="ml-6 flex items-center">
+                                <svg class="h-6 w-6 text-gray-400 group-hover:text-gray-500 block" x-state:on="Open" x-state:off="Closed" :class="{ 'hidden': open, 'block': !(open) }" x-description="Heroicon name: outline/plus-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <svg class="h-6 w-6 text-indigo-400 group-hover:text-indigo-500 hidden" x-state:on="Open" x-state:off="Closed" :class="{ 'block': open, 'hidden': !(open) }" x-description="Heroicon name: outline/minus-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </h3>
+                    <div class="pb-6 prose prose-sm" id="disclosure-1" x-show="open" style="display: none;">
+                        <ul role="list">
+                            <li>Spot clean as needed</li>
+                            <li>Hand wash with mild soap</li>
+                            <li>Machine wash interior dividers</li>
+                            <li>Treat handle and tabs with leather conditioner</li>
+                        </ul>
+                    </div>
+                </div>
+                <div x-data="{ open: false }">
+                    <h3>
+                        <button type="button" x-description="Expand/collapse question button" class="group relative w-full py-6 flex justify-between items-center text-left" aria-controls="disclosure-1" @click="open = !open" aria-expanded="false" x-bind:aria-expanded="open.toString()">
+                            <span class="text-sm font-medium text-gray-900" x-state:on="Open" x-state:off="Closed" :class="{ 'text-indigo-600': open, 'text-gray-900': !(open) }">
+                                Shipping
+                            </span>
+                            <span class="ml-6 flex items-center">
+                                <svg class="h-6 w-6 text-gray-400 group-hover:text-gray-500 block" x-state:on="Open" x-state:off="Closed" :class="{ 'hidden': open, 'block': !(open) }" x-description="Heroicon name: outline/plus-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <svg class="h-6 w-6 text-indigo-400 group-hover:text-indigo-500 hidden" x-state:on="Open" x-state:off="Closed" :class="{ 'block': open, 'hidden': !(open) }" x-description="Heroicon name: outline/minus-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </h3>
+                    <div class="pb-6 prose prose-sm" id="disclosure-1" x-show="open" style="display: none;">
+                        <ul role="list">
+                            <li>Free shipping on orders over $300</li>
+                            <li>International shipping available</li>
+                            <li>Expedited shipping options</li>
+                            <li>Signature required upon delivery</li>
+                        </ul>
+                    </div>
+                </div>
+                <div x-data="{ open: false }">
+                    <h3>
+                        <button type="button" x-description="Expand/collapse question button" class="group relative w-full py-6 flex justify-between items-center text-left" aria-controls="disclosure-1" @click="open = !open" aria-expanded="false" x-bind:aria-expanded="open.toString()">
+                            <span class="text-sm font-medium text-gray-900" x-state:on="Open" x-state:off="Closed" :class="{ 'text-indigo-600': open, 'text-gray-900': !(open) }">
+                                Returns
+                            </span>
+                            <span class="ml-6 flex items-center">
+                                <svg class="h-6 w-6 text-gray-400 group-hover:text-gray-500 block" x-state:on="Open" x-state:off="Closed" :class="{ 'hidden': open, 'block': !(open) }" x-description="Heroicon name: outline/plus-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                <svg class="h-6 w-6 text-indigo-400 group-hover:text-indigo-500 hidden" x-state:on="Open" x-state:off="Closed" :class="{ 'block': open, 'hidden': !(open) }" x-description="Heroicon name: outline/minus-sm" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 12H6"></path>
+                                </svg>
+                            </span>
+                        </button>
+                    </h3>
+                    <div class="pb-6 prose prose-sm" id="disclosure-1" x-show="open" style="display: none;">
+                        <ul role="list">
+                            <li>Easy return requests</li>
+                            <li>Pre-paid shipping label included</li>
+                            <li>10% restocking fee for returns</li>
+                            <li>60 day return window</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+var secondarySlider = new Splide('#secondary-slider', {
+    fixedWidth: 100,
+    height: 100,
+    gap: 10,
+    cover: true,
+    isNavigation: true,
+    pagination: false,
+    arrows: false,
+    //focus: 'center',
+    breakpoints: {
+        '600': {
+            fixedWidth: 66,
+            height: 40,
+        }
+    },
+}).mount();
+var primarySlider = new Splide('#primary-slider', {
+    type: 'fade',
+    heightRatio: 1,
+    pagination: false,
+    arrows: false,
+    cover: false,
+});
+
+primarySlider.sync(secondarySlider).mount();
+
+var selectCallback = function(variant, selector) {
+    if (variant) {
+        if (variant.featured_image) {
+            var slidesArr = secondarySlider.Components.Elements.slides
+            slidesArr.forEach(function(el, index) {
+                if (variant.featured_image.id == el.dataset.id) {
+                    secondarySlider.go(index)
+                }
+            })
+        }
+        if (variant.available) {
+            $('.price-field').html('<span class="product-price">' + Shopify.formatMoney(variant.price, "") + '</span>');
+        } else {
+            // Variant is sold out.
+            $('#add').val('Sold Out').addClass('disabled').attr('disabled', 'disabled').fadeTo(200, 0.5);
+        }
+        // Whether the variant is in stock or not, we can update the price and compare at price.
+        if (variant.compare_at_price > variant.price) {
+            $('.price-field').html('<span class="product-price on-sale">' + Shopify.formatMoney(variant.price, "") + '</span>' + '&nbsp;<s class="product-compare-price">' + Shopify.formatMoney(variant.compare_at_price, "") + '</s>' + '<div class="flex items-center"><div class="flex-initial flex flex-row text-red-600 py-2 rounded-md text-sm round-lg items-center"><div class="flex-initial"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg></div><div class="flex-initial pl-3">' + 'Item on sale' + '</div></div></div>');
+        } else {
+            $('.price-field').html('<span class="product-price">' + Shopify.formatMoney(variant.price, "") + '</span>');
+        }
+    } else {
+        // variant doesn't exist.
+        $('#add').val('Unavailable').addClass('disabled').attr('disabled', 'disabled').fadeTo(200, 0.5);
+    }
+}
+jQuery(function($) {
+    new Shopify.OptionSelectors("product-select", { product: {{ product | json }}, onVariantSelected: selectCallback });
+});
+</script>

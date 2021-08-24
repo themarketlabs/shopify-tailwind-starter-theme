@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "build": "npx tailwindcss build css/application.css -o assets/application.css.liquid && theme deploy --allow-live"
+  },
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "^10.3.2",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.7"
+  }
+}

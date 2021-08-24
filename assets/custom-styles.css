@@ -1,0 +1,18 @@
+.single-option-selector {
+    border-radius: 4px;
+    border: solid 1px #d4d4d4;
+}
+
+@media only screen and (max-width: 768px) {
+    .selector-wrapper > select {
+        width: 100%;
+    }
+}
+
+#nav-search {
+    width: 100%;
+}
+
+#search-page-form input {
+width: 100%;
+}

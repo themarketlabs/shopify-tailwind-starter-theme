@@ -1,0 +1,112 @@
+{% unless template == 'index' or template == 'cart' or template == 'list-collections' %}
+<div class="border-b border-gray-200 py-3 mb-5">
+    <ol class="pt-2 breadcrumb flex flex-nowrap text-sm md:text-base flex-row space-x-2 text-gray-500" role="navigation" aria-label="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ shop.url }}" itemprop="item">
+                <span itemprop="name">Home</span>
+                <meta itemprop="position" content="1" />
+            </a>
+            {% if template contains 'product' %}
+            {% if collection %}
+            &rsaquo;
+            {% if collection.handle %}
+            {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ url }}" itemprop="item">
+                <span itemprop="name">{{ collection.title }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        {% endif %}
+        {% endif %}
+        &rsaquo;
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500 text-gray-700" href="{{ product.url }}" itemprop="item">
+                <span itemprop="name">{{ product.title }}</span>
+                <meta itemprop="position" content="3" />
+            </a>
+        </li>
+        {% elsif template contains 'collection' and collection.handle %}
+        &rsaquo;
+        {% if current_tags %}
+        {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ url }}" itemprop="item">
+                <span itemprop="title">{{ collection.title }}</span>
+                <meta itempop="position" content="2">
+            </a>
+        </li>
+        &rsaquo;
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ page.url }}" itemprop="item">
+                <span itemprop="name">{{ current_tags | join: " + " }}</span>
+                <meta itempop="position" content="2">
+            </a>
+        </li>
+        {% else %}
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ collection.url }}" itemprop="item">
+                <span itemprop="name">{{ collection.title }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        {% endif %}
+        {% elsif template == 'blog' %}
+        &rsaquo;
+        {% if current_tags %}
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ blog.url }}" itemprop="item">
+                <span itemprop="name">{{ blog.title }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        &rsaquo;
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ page.url }}" itemprop="item">
+                <span itemprop="name">{{ current_tags | join: " + " }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        {% else %}
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ blog.url }}" itemprop="item">
+                <span itemprop="name">{{ blog.title }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        {% endif %}
+        {% elsif template == 'article' %}
+        &rsaquo;
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a class="px-1 hover:underline hover:text-blue-500" href="{{ blog.url }}" itemprop="item">
+                <span itemprop="name">{{ blog.title }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        &rsaquo;
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="{{ article.url }}" itemprop="item">
+                <span itemprop="name">{{ article.title }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        {% elsif template contains 'page' %}
+        &rsaquo;
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="{{ page.url }}" itemprop="item">
+                <span itemprop="name">{{ page.title }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        {% else %}
+        &rsaquo;
+        <li class="flex" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a href="{{ page.url }}" itemprop="item">
+                <span itemprop="ame">{{ page.title }}</span>
+                <meta itemprop="position" content="2" />
+            </a>
+        </li>
+        {% endif %}
+    </ol>
+</div>
+{% endunless %}
