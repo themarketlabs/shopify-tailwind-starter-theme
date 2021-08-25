@@ -17,9 +17,7 @@ Be sure to add your `config.yml` file and run `yarn update` to install the depen
 Remember, all your styles are built using `npx tailwindcss build css/application.css -o assets/application.css.liquid`. If you add a new class and it's not appearing in your theme, re-run this script.
 
 # 👋 Before you go
-Check out our Shopify App "Affilaite Commission Finder" in the Shopify app store - https://apps.shopify.com/affiliate-commission-finder
+Check out our Shopify App "Affiliate Commission Finder" in the Shopify app store - https://apps.shopify.com/affiliate-commission-finder
 
 # 💻 About Market Labs
 We are a small group of seasoned developers, advertisers and former ecommerce operators determined to do things a bit differently. Our mission is to make selling easier and more profitable by building the world's most advanced marketplace management software for online merchants.
-
-
