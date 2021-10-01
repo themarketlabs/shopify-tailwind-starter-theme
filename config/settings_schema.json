@@ -1,10 +1,10 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Themekit template theme",
+    "theme_name": "Market Labs TailwindCSS Shopify Starter",
     "theme_version": "1.0.0",
-    "theme_author": "Shopify",
-    "theme_documentation_url": "https://github.com/Shopify/themekit",
-    "theme_support_url": "https://github.com/Shopify/themekit/issues"
+    "theme_author": "Market Labs",
+    "theme_documentation_url": "https:\/\/github.com\/marketlabs\/shopify-tailwind-starter-theme",
+    "theme_support_url": "https:\/\/github.com\/Shopify\/marketlabs\/shopify-tailwind-starter-theme"
   }
 ]

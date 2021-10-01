@@ -1,6 +1,40 @@
 {
-  "current": "Default",
+  "current": {
+    "sections": {
+      "163310485050541ea8": {
+        "type": "hero_image",
+        "blocks": {
+          "163310485050541ea8-0": {
+            "type": "image",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/fashion-model-in-pink.jpg",
+              "image_height": 74,
+              "image_background_position": "top",
+              "image_gradient_darkness": 30,
+              "hero_heading": "Shop Now",
+              "heading_font_size": "text-3xl md:text-5xl",
+              "heading_color": "#ffffff",
+              "sub_heading": "Our sale ends Friday",
+              "sub_heading_color": "#ffffff",
+              "button_url": "",
+              "button_text": "Learn more",
+              "button_background_color": "bg-white hover:bg-gray-200 text-black"
+            }
+          }
+        },
+        "block_order": [
+          "163310485050541ea8-0"
+        ],
+        "settings": {
+        }
+      }
+    },
+    "content_for_index": [
+      "163310485050541ea8"
+    ]
+  },
   "presets": {
-    "Default": { }
+    "Default": {
+    }
   }
 }
